@@ -7,6 +7,10 @@ from bisect import bisect #for function 'letter' implementation
 
 client = MongoClient()
 db = client.ds2
+pk = db.pokedex
+wind_weak = []
+wind_pokemon = ['Scyther', 'Vileplume', 'Butterfree']
+wind = pk.find({'name':{'$in':wind_pokemon}})
 gradecollection = db.grades
 cursor = gradecollection.find()
 result = []
