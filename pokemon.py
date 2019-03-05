@@ -17,15 +17,19 @@ def problem_1(pokedex):
         print(dict(sorted(item.items())))
 
 
+
+
 def problem_2(pokedex):
     # TODO: Problem B
-    final_pokemons = ...
-
+    final_pokemons = pokedex.find({'$and':[{'next_evolution':{'$exists':False}},{'prev_evolution':{'$exists':True}}]}).sort('id',1)
     for pokemon in final_pokemons:
-        candy, count = "", 0
-        
-        # TODO:
-
+        candy, count = "", 0    
+        prev_evolutions = pokemon['prev_evolution']
+        candy = pokemon['candy']
+        for prev in prev_evolutions:
+            p = dict(pokedex.find_one({'num':prev['num']}))
+            if 'candy_count' in p.keys():
+                count += int(p['candy_count'])
         print(pokemon['name'], end=' => ')
         print('{}: {} '.format(candy.encode('ascii', 'ignore').decode('ascii'), count))
 
