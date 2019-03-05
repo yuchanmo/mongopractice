@@ -4,12 +4,15 @@ from pymongo import MongoClient
 
 
 def problem_1(pokedex):
+    from collections import Counter    
+    wind_pokemon = ['Scyther', 'Vileplume', 'Butterfree']    
+    wind = pokedex.find({'name':{'$in':wind_pokemon}})
     wind_weak = []
-    wind_pokemon = ['Scyther', 'Vileplume', 'Butterfree']
-
-    # TODO: Problem A
-    strong = ...
-
+    for i in wind:
+        wind_weak.extend(i['weaknesses'])
+    cnt = Counter(wind_weak)        
+    intersect_pokemon = list(map(lambda x:x[0], filter(lambda v : v[1] == len(wind_pokemon),cnt.items())))
+    strong = pokedex.find({'$and': [{'spawn_time': {'$regex': '^2[0-3]:'}},{'type':{'$in':intersect_pokemon}}]},{'id':1,'name':1,'spawn_time':1,'type':1})    
     for item in strong:
         print(dict(sorted(item.items())))
 

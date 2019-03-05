@@ -1,8 +1,6 @@
 from pymongo import MongoClient
-import sys
 from pprint import pprint
-from collections import OrderedDict
-from bisect import bisect #for function 'letter' implementation
+from collections import Counter
 
 
 client = MongoClient()
@@ -11,27 +9,14 @@ pk = db.pokedex
 wind_weak = []
 wind_pokemon = ['Scyther', 'Vileplume', 'Butterfree']
 wind = pk.find({'name':{'$in':wind_pokemon}})
-gradecollection = db.grades
-cursor = gradecollection.find()
-result = []
-letters ='FDCBA'
-cutline = [60,70,80,90]
-percentageoftype = {'quiz':0.2,'homework':0.3,'exam':0.5}
 
+weaklist = []
 
-for row in cursor:
-    t_dict = OrderedDict()
-    total = 0
-    for grade in row['grades']:        
-        typeofgrade = grade['type']
-        scoreofgrade = grade['score']               
-        total += scoreofgrade*percentageoftype[typeofgrade]
-    total = round(total,1)
-    t_dict['letter'] = letters[bisect(cutline,total)]
-    t_dict['sid'] = row['sid']
-    t_dict['total'] = total
-    result.append(t_dict)
+for i in wind:
+    weaklist.extend(i['weaknesses'])
 
-result.sort(key=lambda x : x['total'],reverse=True)
-for doc in result:
-    print(dict(sorted(doc.items())))  
+cnt = Counter(weaklist)        
+intersect_pokemon = map(lambda x:x[0], filter(lambda v : v[1] == len(wind_pokemon),cnt.items()))
+
+inter = weaklist[0].intersection(weaklist[1])
+
