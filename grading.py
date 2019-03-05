@@ -13,7 +13,7 @@ def pagination(db,pageNum=1):
     collection =db.grades
     numberoflineperpage = 10
     skiplines = (pageNum -1)*numberoflineperpage
-    result = collection.find({},{'grades':1,'sid':1,'_id':0}).skip(skiplines).limit(numberoflineperpage)            
+    result = collection.find({},{'grades':1,'sid':1,'_id':0}).skip(skiplines).limit(numberoflineperpage).sort('sid',1)            
     for doc in result:
         print(dict(doc.items()))
 
