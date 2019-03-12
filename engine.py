@@ -68,6 +68,7 @@ if 'subject_text_text_text' not in existing_indexes.keys():
     enron.create_index([('subject',TEXT),('text',TEXT)],weights={'subject':2,'text':1})
 
 searchfromemail(raw_input)
+client.close()
 
 if __name__ !='__main__':
     test_inputs=['Social / not: Network / sort: date','from: robyn@layfam.com','to: cindy.olson@enron.com, greg.whalley@enron.com / Please / not: Attached, previously']

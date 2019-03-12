@@ -19,8 +19,7 @@ def pagination(db,pageNum=1):
         for (k, v) in sorted(item.items()):
             print('{}:{}'.format(k, v), end=', ')
         print('\b\b }')
-    # for doc in result:
-    #     print(dict(doc.items()))
+
 
 def gettotal(row,checkplus=False):
     total = 0
@@ -56,14 +55,12 @@ def letter(db):
         for (k, v) in sorted(item.items()):
             print('{}:{}'.format(k, v), end=', ')
         print('\b\b }')
-    # for doc in result:
-    #     print(dict(doc.items()))   
+
 
 def perfect(db):
 #problem C
     if 'relative' in db.list_collection_names():
-        db.drop_collection('relative')
-    
+        db.drop_collection('relative')    
     db.create_collection('relative')
     collection =db.grades            
     cursor = collection.find()
@@ -92,8 +89,7 @@ def perfect(db):
         for (k, v) in sorted(item.items()):
             print('{}:{}'.format(k, v), end=', ')
         print('\b\b }')
-    # for doc in result:
-    #     print(dict((doc.items())))
+
 
 if __name__ == "__main__":
     client = MongoClient()
@@ -104,7 +100,6 @@ if __name__ == "__main__":
     elif raw_input == '2':
         letter(db)
     else:
-        perfect(db)
-     
+        perfect(db)    
 
     client.close()
