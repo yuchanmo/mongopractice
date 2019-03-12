@@ -12,9 +12,14 @@ def problem_1(pokedex):
         wind_weak.extend(i['weaknesses'])
     cnt = Counter(wind_weak)        
     intersect_pokemon = list(map(lambda x:x[0], filter(lambda v : v[1] == len(wind_pokemon),cnt.items())))
-    strong = pokedex.find({'$and': [{'spawn_time': {'$regex': '^2[0-3]:'}},{'type':{'$in':intersect_pokemon}}]},{'id':1,'name':1,'spawn_time':1,'type':1})    
+    strong = pokedex.find({'$and': [{'spawn_time': {'$regex': '^2[0-3]:'}},{'type':{'$in':intersect_pokemon}}]},{'id':1,'name':1,'spawn_time':1,'type':1,'_id':0}).sort('name',1)    
     for item in strong:
-        print(dict(sorted(item.items())))
+        print('{ ', end='')
+        for (k, v) in sorted(item.items()):
+            print('{}:{}'.format(k, v), end=', ')
+        print('\b\b }')
+    # for item in strong:
+    #     print(dict(sorted(item.items())))
 
 
 

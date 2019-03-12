@@ -14,8 +14,13 @@ def pagination(db,pageNum=1):
     numberoflineperpage = 10
     skiplines = (pageNum -1)*numberoflineperpage
     result = collection.find({},{'grades':1,'sid':1,'_id':0}).skip(skiplines).limit(numberoflineperpage).sort('sid',1)            
-    for doc in result:
-        print(dict(doc.items()))
+    for item in result:
+        print('{ ', end='')
+        for (k, v) in sorted(item.items()):
+            print('{}:{}'.format(k, v), end=', ')
+        print('\b\b }')
+    # for doc in result:
+    #     print(dict(doc.items()))
 
 def gettotal(row,checkplus=False):
     total = 0
@@ -46,8 +51,13 @@ def letter(db):
         result.append(t_dict)
 
     result.sort(key=lambda x : x['total'],reverse=True)
-    for doc in result:
-        print(dict(doc.items()))   
+    for item in result:
+        print('{ ', end='')
+        for (k, v) in sorted(item.items()):
+            print('{}:{}'.format(k, v), end=', ')
+        print('\b\b }')
+    # for doc in result:
+    #     print(dict(doc.items()))   
 
 def perfect(db):
 #problem C
@@ -67,7 +77,7 @@ def perfect(db):
     
     #letter 
     totallist = list(map(lambda x : x['total'],relativeresultlist))
-    print(totallist)
+    #print(totallist)
     totalmin = min(totallist)
     totalmax = max(totallist)
     cutline = [10,20,50,80]
@@ -76,9 +86,14 @@ def perfect(db):
         t['letter'] = letters[bisect(cutline,x)]
         db.relative.insert_one(t)
 
-    result = db.relative.find({},{'_id':0,'total':0})
-    for doc in result:
-        print(dict((doc.items())))
+    result = db.relative.find({},{'_id':0,'total':0}).sort('sid',1)
+    for item in result:
+        print('{ ', end='')
+        for (k, v) in sorted(item.items()):
+            print('{}:{}'.format(k, v), end=', ')
+        print('\b\b }')
+    # for doc in result:
+    #     print(dict((doc.items())))
 
 if __name__ == "__main__":
     client = MongoClient()

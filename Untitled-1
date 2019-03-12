@@ -1,0 +1,9 @@
+
+inv.insert_one({'_id': 9999,
+  'code': 'abc',
+  'qty': {'color': 'brown', 'num': 100, 'size': '6'},         
+  'tags': ['appliance', 'school', 'book']})
+n2_4 = [{'qty':{'$elemMatch':{'color':'brown'}}}]
+print_result(n2_4,inv)
+n2_4_2 = [{'qty.color':'brown'}]
+print_result(n2_4_2,inv)
