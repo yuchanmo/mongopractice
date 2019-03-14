@@ -24,8 +24,10 @@ def createqueryandsortcondition(searchkeyword):
     sortoption =[]     
     splitted_keyword = searchkeyword.split('/')
     for sk in splitted_keyword:
-        if sk.find(':')<0:            
-            query['$text']={'$search' : sk.replace(',',' '),'$caseSensitive':False,'$language':'en'}        
+        if sk.find(':')<0:   
+            if '$text' not in query.keys():
+                    query['$text']={'$caseSensitive':False,'$language':'en','$search':''}
+            query['$text']['$search'] = query['$text']['$search'] + ' '+ sk.replace(',',' ')
         if sk.find(':')>=0:
             option,keyword = list(map(lambda x : x.strip(), sk.split(':')))            
             if option =='from':
