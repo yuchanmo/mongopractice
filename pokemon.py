@@ -26,13 +26,16 @@ def problem_1(pokedex):
 
 def problem_2(pokedex):
     # TODO: Problem B
+    from pprint import pprint
     final_pokemons = pokedex.find({'$and':[{'next_evolution':{'$exists':False}},{'prev_evolution':{'$exists':True}}]}).sort('id',1)
     for pokemon in final_pokemons:
         candy, count = "", 0    
         prev_evolutions = pokemon['prev_evolution']
-        candy = pokemon['candy']
+        #pprint(prev_evolutions)
+        #candy = pokemon['candy']
         for prev in prev_evolutions:
             p = dict(pokedex.find_one({'num':prev['num']}))
+            candy = p['candy']
             if 'candy_count' in p.keys():
                 count += int(p['candy_count'])
         print(pokemon['name'], end=' => ')
