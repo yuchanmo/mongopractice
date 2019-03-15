@@ -96,7 +96,10 @@ if __name__ == "__main__":
     db = client.ds2
     raw_input = str(sys.argv[1])
     if raw_input == '1':
-        pagination(db, int(sys.argv[2]))
+        try:
+            pagination(db, int(sys.argv[2]))
+        except:
+            print('please put second parameter which indicates page number')
     elif raw_input == '2':
         letter(db)
     else:
